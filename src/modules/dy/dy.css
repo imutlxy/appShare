@@ -1,0 +1,96 @@
+/**
+ * Created by PhpStorm.
+ * @User : Ayers
+ * @Date : 2016/9/7 14:57
+ * @Asc : 分享
+ */
+/*分享*/
+.share{
+    padding: 1.875rem 2rem;
+    height: auto;
+    border-top: 1px solid rgb(212,212,212);
+    border-bottom: 1px solid rgb(222,222,222);
+	background: rgb(253,253,253);
+}
+.share > p{
+    margin: 1.75rem 0 0;
+    min-height: 1.8125rem;
+    max-height: 3.625rem;
+    font-size: 1.875rem;
+    line-height: 1.8125rem;
+    color:rgb(128,128,128);
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+/*用户*/
+.share .share-user{
+    display: block;
+    height: 3.75rem;
+    line-height: 3.75rem;
+}
+.share .share-user > *{
+    display: block;
+    float: left;
+}
+.share .share-user > a{
+    font-size: 2.125rem;
+    color: #de000000;
+}
+.share .share-user > a img{
+    float: left;
+    display: block;
+    width: 3.75rem;
+    height: 3.75rem;
+    margin-right: 1rem ;
+    border-radius: 50%;
+}
+.share .share-date{
+    float: right;
+    font-size: 1.75rem;
+    color: #bbb;
+}
+.share .share-address{
+    margin-left: 2rem;
+    font-size: 1.75rem;
+    color: #2a9577;
+}
+.share .share-address .address-icon{
+    display: block;
+    float: left;
+    width: 1.5rem;
+    height: 3.75rem;
+    background: url("../../img/location.png") no-repeat center;
+    background-size: 1.5rem;
+}
+/*信息*/
+.info{
+    height: auto;
+}
+.info > img {
+    display: block;
+    width: 100%;
+    margin: auto;
+}
+.info .info-text{
+    padding: 0 2rem;
+    font-size: 1.875rem;
+    line-height: 2.8125rem;
+    overflow: hidden;
+}
+.info-text .info-name{
+    margin: 0 1.2rem 0 1.5rem;
+    color: #2a9577;
+}
+.info-text .info-name > span{
+    margin-right: 0.5rem;
+}
+.info-text .info-time{
+    margin-right: 0.3rem;
+    color: rgb(134,134,134);
+}
+.info-text .info-tool{
+    color: rgb(116,116,116);
+}
