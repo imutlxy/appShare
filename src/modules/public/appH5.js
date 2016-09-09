@@ -22,18 +22,12 @@
     doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);
 
+window.onload = function () {
+    var s = document.querySelectorAll('#head a img')[0].height;
+    document.body.style.paddingTop = s +'px';
+};
 
 var $OH = {
-    /**
-     * @desc : 输出head链接
-     * @access : public
-     * @param :
-     * @return : string
-     */
-    getHead : function () {
-        document.getElementById('head').innerHTML = '<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.gongfu.onehit"><img src="src/img/head.png" alt="一招-新武道新技术 App下载"></a>';
-    },
-
     /**
      * @desc : 获取url上参数值
      * @access : public
