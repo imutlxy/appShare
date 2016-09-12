@@ -104,9 +104,8 @@
 }
 #back{
     position: relative;
-    margin-top: 0.5rem;
+    margin: 0.5rem auto 0;
     padding: 2.175rem 2.5rem 0;
-    margin: auto;
     width: 18rem;
     height: 6.575rem;
     text-align: center;
@@ -140,7 +139,6 @@
     white-space: nowrap;
 }
 #back h3 img{
-    /*margin-right: 0.525rem;*/
     margin-right: 0.4rem;
     width: 0.95rem;
     height: 0.95rem;
@@ -153,8 +151,7 @@
 }
 
 #video{
-    margin-top: 0.5rem;
-    margin: auto;
+    margin: 0.5rem auto 0;
     width: 18rem;
     height : 8.75rem;
     background: #333;

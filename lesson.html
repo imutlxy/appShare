@@ -136,7 +136,7 @@
                     isBack : false
                 },
                 ready : function () {
-                    this.$http.jsonp('http://api.getonehit.com:9999/YzServer/webapp/lessonTrain?lessonId='+lessonId).then(function(d){
+                    this.$http.get('http://api.getonehit.com:9999/YzServer/webapp/lessonTrain?lessonId='+lessonId).then(function(d){
                         if(d.data.result.code == 1){
                             var da = d.data.result.data;
                             video(da.lession);
