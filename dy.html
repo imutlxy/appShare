@@ -1,21 +1,83 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="shortcut icon" href="src/img/favicon.ico">
-        <meta name="viewport"content="initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no,minimal-ui"/>
-        <title>动态详情 - 一招</title>
-        <link href="src/lib/ayers/ayers.css" rel="stylesheet">
-        <link href="src/modules/dy/dy.css" rel="stylesheet">
-        <script src="src/modules/public/appH5.js"></script>
-        <script src="src/lib/jquery/jquery-1.11.3.min.js"></script>
-        <script src="src/modules/dy/dy.js"></script>
-    </head>
-	<body>
-        <header id="head">
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.gongfu.onehit"><img src="src/img/head.png" alt="一招-新武道新技术 App下载"></a>
-        </header>
-        <div id="share"></div>
-        <div class="info" id="info"></div>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="http://api.getonehit.com/apph5/appShare/src/img/favicon.ico">
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no,minimal-ui">
+    <title>动态详情 - 一招</title>
+    <link href="src/lib/ayers/ayers.css" rel="stylesheet">
+    <link href="src/modules/dy/dy.css" rel="stylesheet">
+    <script src="src/modules/public/appH5.js"></script>
+    <script src="src/lib/vue/vue.min.js"></script>
+    <script src="src/lib/vue/vue-resource.min.js"></script>1
+</head>
+<body id="body" v-cloak>
+<header id="head">
+    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.gongfu.onehit" title="一招-新武道新技术 App下载">
+        <img src="src/img/head.png" alt="一招-新武道新技术 App下载">
+    </a>
+</header>
+<div id="share">
+    <div class="share-user">
+        <a href="javascript:;">
+            <img v-bind:src="event.userImage" alt="user-img">{{event.userName}}
+        </a>
+        <span class="share-address">
+            <i class="address-icon"></i>
+            {{event.publishlocation}}
+        </span>
+        <span class="share-date">
+            {{event.publicDatetime}}
+        </span>
+    </div>
+    <p>{{event.content}}</p>
+</div>
+<div id="info" v-if="isShow">
+      <p class="info-text">
+          <strong>{{event.lesson.lessonName}}</strong>
+      <span class="info-name">
+          <span>{{event.lesson.sectsName}}</span>
+          {{event.lesson.difficuteName}}
+      </span>
+      <span class="info-time">
+          {{event.lesson.duration}}分钟
+      </span>
+      <span class="info-tool">
+          {{event.lesson.weaponName}}
+      </span>
+      </p>
+      <img v-bind:src="event.lesson.picture" alt="lesson-picture">
+</div>
+
+<script>
+    (function () {
+        var dynamicId = $OH.getQueryStr('dynamicId');
+        if(dynamicId){
+            new Vue({
+                el: '#body',
+                data: {
+                    event : [],
+                    isShow : false
+                },
+                ready : function () {
+                    this.$http.jsonp('http://api.getonehit.com:9999/YzServer/webapp/DynamicDetail?dynamicId='+dynamicId).then(function(d){
+                        if(d.data.result.code == 1){
+                            var da = d.data.result.data.dynamic;
+                            if(da.lesson){
+                                this.$data.isShow = true;
+                                this.$set('event', da);
+                            }
+                        }
+                        else {
+                            throw ('状态错误！');
+                        }
+                    }).catch(function(err) {
+                        throw('错误：'+err);
+                    });
+                }
+            });
+        }
+    })();
+</script>
+</body>
 </html>

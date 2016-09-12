@@ -1,25 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html id="body" v-cloak>
 <head>
-    <meta charset="utf-8">
-    <link rel="shortcut icon" href="src/img/favicon.ico">
-    <meta name="viewport"content="initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no,minimal-ui"/>
-    <title>课程 - 一招</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="http://api.getonehit.com/apph5/appShare/src/img/favicon.ico">
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1,user-scalable=no,minimal-ui">
+    <title>{{lession.lessonName}} - 一招</title>
     <link href="src/lib/ayers/ayers.css" rel="stylesheet">
     <link href="src/modules/lesson/lesson.css" rel="stylesheet">
     <script src="src/modules/public/appH5.js"></script>
-    <script src="src/lib/jquery/jquery-1.11.3.min.js"></script>
-    <script src="src/modules/lesson/lesson.js"></script>
+    <script src="src/lib/vue/vue.min.js"></script>
+    <script src="src/lib/vue/vue-resource.min.js"></script>
 </head>
 <body>
-    <header id="head">
-        <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.gongfu.onehit"><img src="src/img/head.png" alt="一招-新武道新技术 App下载"></a>
-    </header>
-    <div id="banner"></div>
-    <div id="note"></div>
-    <div id="back"></div>
-    <div id="video"></div>
-    <div id="list"></div>
-    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.gongfu.onehit" id="foot">下载APP查看所有教程</a>
+<header id="head">
+    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.gongfu.onehit" title="一招-新武道新技术 App下载">
+        <img src="src/img/head.png" alt="一招-新武道新技术 App下载">
+    </a>
+</header>
+<div id="banner">
+    <img v-bind:src="lession.picture" alt="lession-picture">
+    <div class="bg"></div>
+    <h1>{{lession.lessonName}}</h1>
+    <div class="banner-info">
+        <ul>
+            <li><img v-bind:src="lession.sectsicon" alt="lession-sectsicon">{{lession.sectsName}}</li>
+            <li><img src="src/img/difficulty@2x.png" alt="lession-difficuteName">{{lession.difficuteName}}</li>
+            <li><img src="src/img/time@2x.png" alt="lession-duration">{{lession.duration}}</li>
+        </ul>
+    </div>
+</div>
+<div id="note">
+    <div class="note special">
+        <h2>招式解说</h2>
+        <p>{{lession.memo}}</p>
+    </div>
+    <div class="note">
+        <h2>地点 / 器械</h2>
+        <p>{{lession.trainPlace}}/{{lession.weaponName}}</p>
+    </div>
+</div>
+
+<div id="back" v-if="isBack">
+    <img class="back-img" v-bind:src="trainer.picture" alt="trainer-picture">
+    <div class="back-bg"></div>
+    <h3>
+        <img src="src/img/portrait@2x.png" alt="trainer-portrait">
+        {{trainer.nikeName}}
+    </h3>
+    <p>{{trainer.memo}}</p>
+</div>
+
+<div id="video"></div>
+<div id="list">
+    <div class="list" v-for="action in actionList">
+        <p>{{action.stageName}}</p>
+        <ul>
+            <li v-for="li in action.li">
+                <a></a>
+                <div>
+                    <b>{{li.name}}</b>
+                    <template v-if="li.trainingtype == 1">
+                        <span>{{li.trainingtimes}}次</span>
+                    </template>
+                    <template v-if="li.trainingtype == 2">
+                        <span>{{li.trainingDuration | time}}</span>
+                    </template>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.gongfu.onehit" id="foot">下载APP查看所有教程</a>
+
+<script>
+    (function () {
+        var lessonId = $OH.getQueryStr('lessonId');
+
+        function video(d) {
+            var videos = '<video class="video-js vjs-default-skin" controls preload="auto" poster="'+d.videoPicture+'">';
+            videos += '<source src="'+d.videoUrl+'" type="video/mp4" />';
+            videos += '<track kind="captions" src="demo.captions.vtt" srclang="en" label="English" />';
+            videos += '<track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English" /></video>';
+            document.getElementById('video').innerHTML = videos;
+        }
+
+        function actionList(d) {
+            if(d && d[0]){
+                var len = d.length,
+                    arr = [{
+                        id : d[0].stageID,
+                        stageName : d[0].stageName,
+                        li : [d[0]]
+                    }];
+                for(var i = 1;i<len;i++){
+                    for(var p = 0,la=arr.length;p<la;p++){
+                        if(d[i].stageID == arr[p].id){
+                            arr[p].li.push(d[i]);
+                            break;
+                        }else if(p == la-1 && d[i].stageID !== arr[p].id){
+                            arr.push({
+                                id : d[i].stageID,
+                                stageName : d[i].stageName,
+                                li : [d[i]]
+                            });
+                            break;
+                        }
+                    }
+                }
+                return arr;
+            }else {
+                return [];
+            }
+        }
+
+        Vue.filter('time', function (v) {
+            v = (v-0);
+            var m = parseInt(v/60);
+            var s = parseInt(v%60);
+            if(m<10) m = "0" + m;
+            if(s<10) s = "0" + s;
+            if(s>0){
+                return (m + ":" + s);
+            }else{
+                return (m + ":00");
+            }
+        });
+
+        if(lessonId){
+            new Vue({
+                el: '#body',
+                data: {
+                    lession : [],
+                    trainer : [],
+                    actionList : [],
+                    isBack : false
+                },
+                ready : function () {
+                    this.$http.jsonp('http://api.getonehit.com:9999/YzServer/webapp/lessonTrain?lessonId='+lessonId).then(function(d){
+                        if(d.data.result.code == 1){
+                            var da = d.data.result.data;
+                            video(da.lession);
+                            if($OH.isEmptyObject(da.trainer)){
+                                this.$data.isBack = true;
+                                this.$data.trainer = da.trainer;
+                            }
+                            this.$data.actionList = actionList(da.lession.actionList);
+                            this.$set('lession', da.lession);
+                        }
+                        else {
+                            throw ('状态错误！');
+                        }
+                    }).catch(function(err) {
+                        throw('错误：' + err);
+                    });
+                }
+            });
+        }
+    })();
+</script>
 </body>
 </html>

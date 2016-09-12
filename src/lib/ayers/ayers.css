@@ -104,5 +104,5 @@ a{color:#333}
 a:focus,a:hover{text-decoration:none}
 .con{margin:auto;width:100%;max-width:46.875rem;height:auto}
 /*公共*/
-#head{position:fixed;top:0;left:0;z-index:99;height:auto;background:#fff;-webkit-transform: translateZ(0)}
-#head img{display:block;margin:auto;width:100%;}
+#head{position:fixed;top:0;left:0;z-index:99;width: 100%;height:auto;background:#fff;-webkit-transform: translateZ(0)}
+#head img{display:block;margin:auto;width: 18rem;}

@@ -1,16 +1,15 @@
 #share{
-    /*padding: 0.75rem 0.8rem 0.2rem;*/
     padding: 0.75rem 0.8rem 0.3rem;
+    margin: auto;
+    width: 18rem;
     height: auto;
     border-top: 1px solid #d4d4d4;
-    border-bottom: 1px solid #dedede;
     background: #fdfdfd;
 }
 #share > p{
     margin: 0.7rem 0 0;
     min-height: 1.125rem;
     max-height: 2.25rem;
-    /*font-size: 0.75rem;*/
     font-size: 0.65rem;
     line-height: 1.125rem;
     color: #808080;
@@ -62,7 +61,10 @@
 }
 /*信息*/
 #info{
+    margin: auto;
+    width: 18rem;
     height: auto;
+    border-top: 1px solid #dedede;
 }
 #info > img {
     display: block;
