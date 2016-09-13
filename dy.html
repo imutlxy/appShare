@@ -60,7 +60,7 @@
                     isShow : false
                 },
                 ready : function () {
-                    this.$http.get('http://api.getonehit.com:9999/YzServer/webapp/DynamicDetail?dynamicId='+dynamicId).then(function(d){
+                    this.$http.jsonp('http://api.getonehit.com:9999/YzServer/webapp/DynamicDetail?dynamicId='+dynamicId).then(function(d){
                         if(d.data.result.code == 1){
                             var da = d.data.result.data.dynamic;
                                 this.$set('event', da);
